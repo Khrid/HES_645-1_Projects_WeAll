@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 export default function Login() {
   const [email, setEmail] = useState("entreprise1@fake.ch");
   const [password, setPassword] = useState("passwordTest");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const history = useHistory();
 
@@ -16,7 +16,7 @@ export default function Login() {
 
       // Save the token to localStorage & redirect to the home page
       localStorage.setItem(TOKEN_STORAGE_KEY, loginData.token);
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
 
       // Redirect to the home page
       history.push("/chat");
