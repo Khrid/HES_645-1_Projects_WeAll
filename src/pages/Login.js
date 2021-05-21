@@ -4,10 +4,26 @@ import { TOKEN_STORAGE_KEY } from "../utils/request";
 import { useHistory } from "react-router-dom";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("entreprise1@fake.ch");
+  const [password, setPassword] = useState("passwordTest");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const history = useHistory();
+
+  const login = async () => {
+    try {
+      let loginData = await Backend.login(email, password);
+
+      // Save the token to localStorage & redirect to the home page
+      localStorage.setItem(TOKEN_STORAGE_KEY, loginData.token);
+      setIsLoggedIn(true);
+
+      // Redirect to the home page
+      history.push("/chat");
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -20,18 +36,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     // Stop the browser from submitting in the "traditional" way
     e.preventDefault();
-
-    try {
-      let loginData = await Backend.login(email, password);
-
-      // Save the token to localStorage & redirect to the home page
-      localStorage.setItem(TOKEN_STORAGE_KEY, loginData.token);
-
-      // Redirect to the home page
-      history.push("/");
-    } catch (e) {
-      console.error(e);
-    }
+    login();
   };
 
   return (
