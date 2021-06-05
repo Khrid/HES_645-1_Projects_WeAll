@@ -1,5 +1,5 @@
 import React from "react";
-
+import { tokenIsStored } from "../utils/helper";
 export const LoginContext = React.createContext();
 function loginReducer(state, action) {
   switch (action.type) {
@@ -19,7 +19,7 @@ function loginReducer(state, action) {
 }
 function LoginProvider({ children }) {
   const [state, dispatch] = React.useReducer(loginReducer, {
-    isLoggedIn: false,
+    isLoggedIn: tokenIsStored(),
   });
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context

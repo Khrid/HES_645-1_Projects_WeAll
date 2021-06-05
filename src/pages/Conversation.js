@@ -21,7 +21,7 @@ export const Conversation = () => {
     });
   }, []);
 
-  React.useEffect(async () => {
+  React.useEffect(() => {
     scrollToBottom();
   }, [selectedUserId]);
 
@@ -46,15 +46,17 @@ export const Conversation = () => {
         <div className="uk-flex">
           <div className="uk-position-relative uk-display-block uk-width-auto">
             {isLoggedIn ? (
-              Object.keys(chats).map((conv) => {
-                return (
-                  <div key={`chatavalaible-${conv}`}>
-                    <a onClick={(e) => selectConversation(conv)}>
-                      {chats[conv].name} - {chats[conv].lenght} messages
-                    </a>
-                  </div>
-                );
-              })
+              <ul class="uk-list uk-list-large uk-list-divider">
+                {Object.keys(chats).map((conv) => {
+                  return (
+                    <div key={`chatavalaible-${conv}`}>
+                      <a onClick={(e) => selectConversation(conv)}>
+                        {chats[conv].name}
+                      </a>
+                    </div>
+                  );
+                })}
+              </ul>
             ) : (
               <p>Error - You are not logged in</p>
             )}

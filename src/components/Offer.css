@@ -1,0 +1,9 @@
+.uk-input:disabled,
+.uk-textarea:disabled {
+  background-color: white;
+  color: black;
+}
+
+.uk-textarea {
+  resize: none;
+}

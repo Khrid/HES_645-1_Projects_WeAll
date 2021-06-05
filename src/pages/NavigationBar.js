@@ -1,8 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useIsLoggedInContext } from "../services/login-context";
 import { resetLogin } from "../utils/helper";
 
-export const NavigationBar = (props) => {
+const routes = [
+  { to: "/companies", name: "Companies" },
+  { to: "/chat", name: "Chat" },
+  { to: "/offers", name: "Offers" },
+];
+
+export const NavigationBar = () => {
   const { state, dispatch } = useIsLoggedInContext();
   const { isLoggedIn } = state;
 
@@ -22,21 +28,21 @@ export const NavigationBar = (props) => {
           <ul className="uk-navbar-nav">
             {isLoggedIn ? (
               <>
-                <li className="uk-active">
-                  <Link className="App-link" to={`/companies`}>
-                    Companies
-                  </Link>
-                </li>
-
+                {routes.map((r) => (
+                  <li className="">
+                    <NavLink
+                      activeClassName="link-active"
+                      className="App-link"
+                      to={r.to}
+                    >
+                      {r.name}
+                    </NavLink>
+                  </li>
+                ))}
                 <li>
-                  <Link className="App-link" to={`/chat`}>
-                    Chat
-                  </Link>
-                </li>
-                <li>
-                  <a className="App-link" onClick={logout} href="/">
+                  <NavLink className="App-link" onClick={logout} to={"/"}>
                     Logout
-                  </a>
+                  </NavLink>
                 </li>
               </>
             ) : (

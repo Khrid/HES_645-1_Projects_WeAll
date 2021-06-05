@@ -4,10 +4,8 @@ import { Conversation } from "./pages/Conversation";
 import Companies from "./pages/Companies";
 import Login from "./pages/Login";
 import { NavigationBar } from "./pages/NavigationBar";
-import { useEffect, useState } from "react";
-import { logged } from "./utils/helper";
 import { LoginProvider } from "./services/login-context";
-import { Home } from "./pages/Home";
+import { OfferList } from "./pages/OfferList";
 
 function App() {
   return (
@@ -18,6 +16,9 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <Login />
+            </Route>
+            <Route path="/offers" exact>
+              <OfferList />
             </Route>
             <Route path="/companies">
               <Companies />
