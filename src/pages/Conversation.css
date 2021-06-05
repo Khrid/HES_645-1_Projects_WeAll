@@ -1,0 +1,13 @@
+.msg-text {
+  background: none !important;
+  resize: none;
+  border: none;
+}
+
+.chat-container {
+  overflow-y: scroll;
+  height: 65vh;
+}
+.date-string {
+  font-size: 10px;
+}
