@@ -6,7 +6,7 @@ import { useIsLoggedInContext } from "../services/login-context";
 
 export default function Login() {
   const { state, dispatch } = useIsLoggedInContext();
-  const { isLoggedIn } = state;
+  const { isLoggedIn, error } = state;
   // const { setIsLoggedIn, isLoggedIn } = props;
   const [email, setEmail] = useState("entreprise1@fake.ch");
   const [password, setPassword] = useState("passwordTest");
@@ -24,7 +24,10 @@ export default function Login() {
       // Redirect to the home page
       history.push("/chat");
     } catch (e) {
-      dispatch({ type: "IS_LOGGED_OFF" });
+      dispatch({
+        type: "IS_LOGGED_ERROR",
+        error: "Error with API on login",
+      });
       console.error(e);
     }
   };
@@ -47,7 +50,7 @@ export default function Login() {
     <div>
       <div
         className="uk-section uk-flex uk-flex-middle uk-animation-fade"
-        uk-height-viewport
+        data-uk-height-viewport="expand:true;"
       >
         <div className="uk-width-1-1">
           <div className="uk-container">
@@ -97,6 +100,7 @@ export default function Login() {
                       </button>
                     </div>
                   </form>
+                  {error ? <span class="uk-alert-danger">{error}</span> : null}
                 </div>
               </div>
             </div>

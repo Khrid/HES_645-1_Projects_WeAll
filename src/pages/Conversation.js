@@ -26,7 +26,8 @@ export const Conversation = () => {
   }, [selectedUserId]);
 
   const scrollToBottom = () => {
-    scrollElement.current.scrollTop = scrollElement.current.scrollHeight;
+    if (scrollElement.current)
+      scrollElement.current.scrollTop = scrollElement.current.scrollHeight;
   };
 
   const selectConversation = (id) => {
@@ -34,7 +35,9 @@ export const Conversation = () => {
     setSelectedChat(chats[id]);
   };
 
-  const sendMessage = () => {};
+  const sendMessage = () => {
+    // setChats([...selectedChat, {}]);
+  };
 
   return (
     <>
@@ -47,7 +50,6 @@ export const Conversation = () => {
                 return (
                   <div key={`chatavalaible-${conv}`}>
                     <a onClick={(e) => selectConversation(conv)}>
-                      {conv}
                       {chats[conv].name} - {chats[conv].lenght} messages
                     </a>
                   </div>
@@ -59,24 +61,26 @@ export const Conversation = () => {
           </div>
           <div className="uk-padding uk-padding-remove-top uk-width-expand">
             <div className="uk-card uk-card-default uk-border-rounded">
-              <div
-                className="uk-card-body uk-padding-small chat-container"
-                ref={scrollElement}
-              >
-                {isLoggedIn && selectedChat ? (
-                  selectedChat.msg?.map((m, index) => {
-                    return (
-                      <Message
-                        key={`message-${index}`}
-                        message={m}
-                        selectedUserId={selectedUserId}
-                      />
-                    );
-                  })
-                ) : (
-                  <Spinner />
-                )}
-              </div>
+              {isLoggedIn ? (
+                <div
+                  className="uk-card-body uk-padding-small uk-animation-fade chat-container"
+                  ref={scrollElement}
+                >
+                  {selectedChat ? (
+                    selectedChat.msg?.map((m, index) => {
+                      return (
+                        <Message
+                          key={`message-${index}`}
+                          message={m}
+                          selectedUserId={selectedUserId}
+                        />
+                      );
+                    })
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
+              ) : null}
 
               {isLoggedIn && selectedChat ? (
                 <div className="uk-card-footer uk-padding-remove">

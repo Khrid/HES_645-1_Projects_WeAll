@@ -9,6 +9,9 @@ function loginReducer(state, action) {
     case "IS_LOGGED_OFF": {
       return { isLoggedIn: false };
     }
+    case "IS_LOGGED_ERROR": {
+      return { isLoggedIn: false, error: action.error };
+    }
     default: {
       return { isLoggedIn: false };
     }
