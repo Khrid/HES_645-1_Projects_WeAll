@@ -20,8 +20,8 @@ export const Backend = {
   companies: async () => {
     return request(ENDPOINTS.COMPANIES);
   },
-  myChat: async () => {
-    return request(ENDPOINTS.CHAT + "/myHistoric");
+  getConversation: async () => {
+    return request(ENDPOINTS.CHAT + "/conversation");
   },
   getOffers: async () => {
     return request(ENDPOINTS.OFFERS);

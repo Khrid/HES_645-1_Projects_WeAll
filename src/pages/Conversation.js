@@ -8,6 +8,7 @@ import "./Conversation.css";
 export const Conversation = () => {
   const { state } = useIsLoggedInContext();
   const { isLoggedIn } = state;
+  const [conversations, setConversations] = React.useState([]);
   const [chats, setChats] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState();
   const [selectedUserId, setSelectedUserId] = React.useState();
@@ -15,8 +16,8 @@ export const Conversation = () => {
   const scrollElement = createRef();
 
   React.useEffect(async () => {
-    await Backend.myChat().then((data) => {
-      setChats(data);
+    await Backend.getConversation().then((data) => {
+      setConversations(data);
       console.log(data);
     });
   }, []);
@@ -47,7 +48,19 @@ export const Conversation = () => {
           <div className="uk-position-relative uk-display-block uk-width-auto">
             {isLoggedIn ? (
               <ul class="uk-list uk-list-large uk-list-divider">
-                {Object.keys(chats).map((conv) => {
+                {conversations ? conversations.map(c => 
+                <div key={`chatavalaible-${c.id_user1}-${c.id_user2}`}>
+                <a onClick={(e) => selectConversation(c)}>
+                  {c.nom_entreprise}
+                  {/* "id_user1": 1,
+                  "id_user2": 2,
+                  "nom_entreprise": "Weall",
+                  "nom_postulant": "John Kofee" */}
+                </a>
+              </div>
+                ):null}
+
+                {/* {Object.keys(chats).map((conv) => {
                   return (
                     <div key={`chatavalaible-${conv}`}>
                       <a onClick={(e) => selectConversation(conv)}>
@@ -55,7 +68,7 @@ export const Conversation = () => {
                       </a>
                     </div>
                   );
-                })}
+                })} */}
               </ul>
             ) : (
               <p>Error - You are not logged in</p>
