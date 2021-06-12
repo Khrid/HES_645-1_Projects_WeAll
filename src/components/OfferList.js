@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Backend } from "../services/backend";
-import { Offer } from "../components/Offer";
+import { Offer } from "./Offer";
+import { useIsLoggedInContext } from "../services/login-context";
 export const OfferList = () => {
+
   const [offers, setOffers] = useState([]);
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [enterprise, setEnterprise] = useState();

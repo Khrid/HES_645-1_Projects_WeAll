@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Backend } from "../services/backend";
-import { TOKEN_STORAGE_KEY } from "../utils/request";
+import { TOKEN_STORAGE_KEY, USER_ID_STORAGE_KEY } from "../utils/request";
 import { useHistory } from "react-router-dom";
 import { useIsLoggedInContext } from "../services/login-context";
 
@@ -19,7 +19,8 @@ export default function Login() {
 
       // Save the token to localStorage & redirect to the home page
       localStorage.setItem(TOKEN_STORAGE_KEY, loginData.token);
-      dispatch({ type: "SET_LOGIN", isEntreprise:loginData.isEntreprise, userId: loginData.userId  });
+      localStorage.setItem(USER_ID_STORAGE_KEY, loginData.userId);
+      dispatch({ type: "SET_LOGIN", isEntreprise: loginData.isEnterprise, userId: loginData.userId  });
 
       // Redirect to the home page
       history.push("/chat");

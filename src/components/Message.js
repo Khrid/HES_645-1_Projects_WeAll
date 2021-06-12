@@ -3,7 +3,7 @@ import { getDateFormattedFromIsoDate } from "../utils/helper";
 export const Message = (props) => {
   const { message, selectedUserId } = props;
   const isMe = () => {
-    return selectedUserId != message.idUser1;
+    return selectedUserId == message.id_user1;
   };
   return (
     <div

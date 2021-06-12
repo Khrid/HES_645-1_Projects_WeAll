@@ -4,8 +4,9 @@ import { Conversation } from "./pages/Conversation";
 import Companies from "./pages/Companies";
 import Login from "./pages/Login";
 import { NavigationBar } from "./pages/NavigationBar";
-import { LoginProvider } from "./services/login-context";
-import { OfferList } from "./pages/OfferList";
+import { LoginProvider, useIsLoggedInContext } from "./services/login-context";
+
+import { Offers } from "./pages/Offers";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
               <Login />
             </Route>
             <Route path="/offers" exact>
-              <OfferList />
+              <Offers />
+           
             </Route>
             <Route path="/companies">
               <Companies />

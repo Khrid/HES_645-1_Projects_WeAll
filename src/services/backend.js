@@ -30,8 +30,12 @@ export const Backend = {
     return request(ENDPOINTS.ENTERPRISE + "/" + id);
   },
 
-  getSpecificConversation: (idUser1,idUser2)=>{
+  getSpecificConversation: (idUser1, idUser2) => {
     return request(ENDPOINTS.CHAT +"/message/" +idUser1 +"/"+idUser2)
+  },
+
+  sendMessage: (idUser1, idUser2, message) => {
+    return request(ENDPOINTS.CHAT + "/message/" + idUser1 + "/" + idUser2 , { method:'POST', data: { message: message }});
   }
 
 };

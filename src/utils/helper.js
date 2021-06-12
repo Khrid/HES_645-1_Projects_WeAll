@@ -1,4 +1,4 @@
-import { TOKEN_STORAGE_KEY } from "./request";
+import { TOKEN_STORAGE_KEY, USER_ID_STORAGE_KEY } from "./request";
 
 export const tokenIsStored = () => {
   return (
@@ -7,8 +7,16 @@ export const tokenIsStored = () => {
   );
 };
 
+export const userIdIsStored = () => {
+  return (
+    localStorage.getItem(USER_ID_STORAGE_KEY) !== null &&
+    localStorage.getItem(USER_ID_STORAGE_KEY) !== undefined
+  );
+};
+
 export const resetLogin = () => {
   localStorage.removeItem(TOKEN_STORAGE_KEY);
+  localStorage.removeItem(USER_ID_STORAGE_KEY);
   window.location = "/";
 };
 

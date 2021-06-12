@@ -3,56 +3,57 @@ import { Message } from "../components/Message";
 import { Spinner } from "../components/Spinner";
 import { Backend } from "../services/backend";
 import { useIsLoggedInContext } from "../services/login-context";
+import { userIdIsStored } from "../utils/helper";
 import "./Conversation.css";
 
 export const Conversation = () => {
   const { state } = useIsLoggedInContext();
-  const { isLoggedIn, userId } = state;
+  const { isLoggedIn, userId, isEntreprise } = state;
   const [conversations, setConversations] = React.useState([]);
-  const [specificConversation, setSpecificConversation] = React.useState([]);
-  const [chats, setChats] = React.useState([]);
-  const [selectedChat, setSelectedChat] = React.useState();
-  const [selectedUserId, setSelectedUserId] = React.useState();
+  const [specificConversation, setSpecificConversation] = React.useState(null);
   const [messageToSend, setMessageToSend] = React.useState("");
+  const [user1, setUser1] = React.useState();
+  const [user2, setUser2] = React.useState();
   const scrollElement = createRef();
 
   React.useEffect(async () => {
-    await Backend.getConversation().then((data) => {
-      setConversations(data.filter(d => d.id_user1 == userId || d.id_user2 == userId));
-      console.log(data);
+    if(userIdIsStored())
+      await Backend.getConversation().then((data) => {
+      setConversations(data.filter(d => d.id_user1 === userId));
     });
   }, []);
 
-  
+  React.useEffect(() => {
+    updateSpecificConversation();
+  }, [user1, user2])
+
   React.useEffect(() => {
     scrollToBottom();
-  }, [selectedUserId]);
-
+  }, [specificConversation]);  
   
-
   const scrollToBottom = () => {
     if (scrollElement.current)
       scrollElement.current.scrollTop = scrollElement.current.scrollHeight;
   };
 
-  const selectConversation = (id) => {
-    setSelectedUserId(id);
-    setSelectedChat(chats[id]);
-  };
+  const updateSpecificConversation = () => {
+    if(user1 && user2) {
+      Backend.getSpecificConversation(user1, user2).then((data) => {
+        setSpecificConversation(data);
+      });
+    }
+  }
 
-  const getUsers=(conv) => {
-  
-    Backend.getSpecificConversation(conv.id_user1,conv.id_user2).then((data) => {
-      setSpecificConversation(data);
-      console.log(conv.id_user2)
-      console.log(conv.id_user1)
-    });
-    
+  const setConversationSelected = (conv) => {
+    setUser1(conv.id_user1);
+    setUser2(conv.id_user2);
   };
-
 
   const sendMessage = () => {
-    // setChats([...selectedChat, {}]);
+    Backend.sendMessage(user1, user2, messageToSend).then((data) => {
+      setMessageToSend("");
+      updateSpecificConversation();
+    });
   };
 
 
@@ -64,12 +65,13 @@ export const Conversation = () => {
           <div className="uk-position-relative uk-display-block uk-width-auto">
             {isLoggedIn ? (
               <ul class="uk-list uk-list-large uk-list-divider">
-                {conversations ? conversations.map(c => 
-                <div key={`chatavalaible-${c.id_user1}-${c.id_user2}`}>
+                {conversations ? conversations.map((c, i) => 
+                <div key={`chatavalaible-${i}`}>
                 
-                <a onClick={(e) => getUsers(c)}>
+                <a onClick={(e) => setConversationSelected(c)}>
                   
-                  {c.nom_entreprise}
+                  {isEntreprise && c.nom_postulant ? c.nom_postulant: ''}
+                  {!isEntreprise && c.nom_entreprise ? c.nom_entreprise: ''}
                 </a>
               </div>
                 ):null}
@@ -91,7 +93,7 @@ export const Conversation = () => {
                         <Message
                           key={`message-${index}`}
                           message={m}
-                          selectedUserId={selectedUserId}
+                          selectedUserId={userId}
                         />
                       );
                     })
@@ -101,21 +103,19 @@ export const Conversation = () => {
                 </div>
               ) : null}
 
-              {isLoggedIn && selectedChat ? (
+              {isLoggedIn && specificConversation ? (
                 <div className="uk-card-footer uk-padding-remove">
                   <div className="uk-grid uk-grid-small uk-flex-middle">
-                    {/* <div className="uk-width-auto">
-                      <a
-                        href="#"
-                        className="uk-icon-link uk-margin-small-left"
-                        uk-icon="icon: happy"
-                      ></a>
-                    </div> */}
                     <div className="uk-width-expand">
                       <div className="uk-padding-small">
                         <textarea
                           className="uk-textarea uk-padding-remove uk-border-remove msg-text"
                           rows="1"
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                              sendMessage()
+                            }
+                          }}
                           placeholder="Message"
                           value={messageToSend}
                           onChange={(e) => {
