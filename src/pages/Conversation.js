@@ -9,6 +9,7 @@ export const Conversation = () => {
   const { state } = useIsLoggedInContext();
   const { isLoggedIn, userId } = state;
   const [conversations, setConversations] = React.useState([]);
+  const [specificConversation, setSpecificConversation] = React.useState([]);
   const [chats, setChats] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState();
   const [selectedUserId, setSelectedUserId] = React.useState();
@@ -22,9 +23,12 @@ export const Conversation = () => {
     });
   }, []);
 
+  
   React.useEffect(() => {
     scrollToBottom();
   }, [selectedUserId]);
+
+  
 
   const scrollToBottom = () => {
     if (scrollElement.current)
@@ -36,9 +40,21 @@ export const Conversation = () => {
     setSelectedChat(chats[id]);
   };
 
+  const getUsers=(conv) => {
+  
+    Backend.getSpecificConversation(conv.id_user1,conv.id_user2).then((data) => {
+      setSpecificConversation(data);
+      console.log(conv.id_user2)
+      console.log(conv.id_user1)
+    });
+    
+  };
+
+
   const sendMessage = () => {
     // setChats([...selectedChat, {}]);
   };
+
 
   return (
     <>
@@ -48,14 +64,12 @@ export const Conversation = () => {
           <div className="uk-position-relative uk-display-block uk-width-auto">
             {isLoggedIn ? (
               <ul class="uk-list uk-list-large uk-list-divider">
-                {conversations ? conversations.map((c, i) => 
-                <div key={`chatavalaible-${i}`}>
-                <a onClick={(e) => selectConversation(c)}>
+                {conversations ? conversations.map(c => 
+                <div key={`chatavalaible-${c.id_user1}-${c.id_user2}`}>
+                
+                <a onClick={(e) => getUsers(c)}>
+                  
                   {c.nom_entreprise}
-                  {/* "id_user1": 1,
-                  "id_user2": 2,
-                  "nom_entreprise": "Weall",
-                  "nom_postulant": "John Kofee" */}
                 </a>
               </div>
                 ):null}
@@ -71,8 +85,8 @@ export const Conversation = () => {
                   className="uk-card-body uk-padding-small uk-animation-fade chat-container"
                   ref={scrollElement}
                 >
-                  {selectedChat ? (
-                    selectedChat.msg?.map((m, index) => {
+                  {specificConversation ? (
+                    specificConversation.map((m, index) => {
                       return (
                         <Message
                           key={`message-${index}`}
