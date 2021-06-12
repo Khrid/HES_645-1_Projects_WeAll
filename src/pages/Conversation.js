@@ -7,7 +7,7 @@ import "./Conversation.css";
 
 export const Conversation = () => {
   const { state } = useIsLoggedInContext();
-  const { isLoggedIn } = state;
+  const { isLoggedIn, userId } = state;
   const [conversations, setConversations] = React.useState([]);
   const [chats, setChats] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState();
@@ -17,7 +17,7 @@ export const Conversation = () => {
 
   React.useEffect(async () => {
     await Backend.getConversation().then((data) => {
-      setConversations(data);
+      setConversations(data.filter(d => d.id_user1 == userId || d.id_user2 == userId));
       console.log(data);
     });
   }, []);
@@ -48,8 +48,8 @@ export const Conversation = () => {
           <div className="uk-position-relative uk-display-block uk-width-auto">
             {isLoggedIn ? (
               <ul class="uk-list uk-list-large uk-list-divider">
-                {conversations ? conversations.map(c => 
-                <div key={`chatavalaible-${c.id_user1}-${c.id_user2}`}>
+                {conversations ? conversations.map((c, i) => 
+                <div key={`chatavalaible-${i}`}>
                 <a onClick={(e) => selectConversation(c)}>
                   {c.nom_entreprise}
                   {/* "id_user1": 1,

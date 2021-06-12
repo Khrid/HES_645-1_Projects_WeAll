@@ -10,7 +10,7 @@ const routes = [
 
 export const NavigationBar = () => {
   const { state, dispatch } = useIsLoggedInContext();
-  const { isLoggedIn } = state;
+  const { isLoggedIn, isEntreprise, userId } = state;
 
   const logout = (e) => {
     e.preventDefault();

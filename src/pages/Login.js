@@ -19,7 +19,7 @@ export default function Login() {
 
       // Save the token to localStorage & redirect to the home page
       localStorage.setItem(TOKEN_STORAGE_KEY, loginData.token);
-      dispatch({ type: "IS_LOGGED_IN" });
+      dispatch({ type: "SET_LOGIN", isEntreprise:loginData.isEntreprise, userId: loginData.userId  });
 
       // Redirect to the home page
       history.push("/chat");
