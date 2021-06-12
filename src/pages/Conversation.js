@@ -59,16 +59,6 @@ export const Conversation = () => {
                 </a>
               </div>
                 ):null}
-
-                {/* {Object.keys(chats).map((conv) => {
-                  return (
-                    <div key={`chatavalaible-${conv}`}>
-                      <a onClick={(e) => selectConversation(conv)}>
-                        {chats[conv].name}
-                      </a>
-                    </div>
-                  );
-                })} */}
               </ul>
             ) : (
               <p>Error - You are not logged in</p>
