@@ -19,10 +19,11 @@ export const Message = (props) => {
             isMe() ? "uk-card-primary" : "uk-card-default"
           } uk-card uk-card-body uk-card-small uk-border-rounded`}
         >
-          <p className="uk-margin-remove">{message.msg}</p>
+          <p className="uk-margin-remove">{message.message}</p>
           <p className="uk-margin-remove date-string">
             {getDateFormattedFromIsoDate(message.date)}
           </p>
+          
           {/* <div className="uk-card-body uk-margin-remove uk-padding-remove">
             {message.msg}
           </div>

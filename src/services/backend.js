@@ -29,4 +29,9 @@ export const Backend = {
   getEnterprise: async (id) => {
     return request(ENDPOINTS.ENTERPRISE + "/" + id);
   },
+
+  getSpecificConversation: (idUser1,idUser2)=>{
+    return request(ENDPOINTS.CHAT +"/message/" +idUser1 +"/"+idUser2)
+  }
+
 };
