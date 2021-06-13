@@ -20,7 +20,6 @@ function App() {
             </Route>
             <Route path="/offers" exact>
               <Offers />
-           
             </Route>
             <Route path="/companies">
               <Companies />

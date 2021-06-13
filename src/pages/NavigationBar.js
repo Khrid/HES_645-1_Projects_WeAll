@@ -3,7 +3,6 @@ import { useIsLoggedInContext } from "../services/login-context";
 import { resetLogin } from "../utils/helper";
 
 const routes = [
-  { to: "/companies", name: "Companies" },
   { to: "/chat", name: "Chat" },
   { to: "/offers", name: "Offers" },
 ];
@@ -28,8 +27,8 @@ export const NavigationBar = () => {
           <ul className="uk-navbar-nav">
             {isLoggedIn ? (
               <>
-                {routes.map((r) => (
-                  <li className="">
+                {routes.map((r, i) => (
+                  <li key={'route-' + i} className="">
                     <NavLink
                       activeClassName="link-active"
                       className="App-link"

@@ -4,6 +4,8 @@ import {OfferList} from '../components/OfferList';
 
 export const Offers = () => {
   const { state } = useIsLoggedInContext();
-  const { isEntreprise } = state;  
-  return <>{isEntreprise ? <CvList />: <OfferList />}</>
+  const { isEntreprise } = state;
+  return <>
+    {isEntreprise === true ? <CvList />: <OfferList />}  
+  </>
 }

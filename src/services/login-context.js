@@ -1,6 +1,6 @@
 import React from "react";
 import { tokenIsStored } from "../utils/helper";
-import { USER_ID_STORAGE_KEY } from "../utils/request";
+import { IS_ENTERPRISE_STORAGE_KEY, USER_ID_STORAGE_KEY } from "../utils/request";
 
 export const LoginContext = React.createContext();
 
@@ -13,10 +13,10 @@ function loginReducer(state, action) {
       return { ...state, isLoggedIn: false, isEntreprise:null, userId: null };
     }
     case "IS_LOGGED_ERROR": {
-      return { ...state, isLoggedIn: false, error: action.error, isEntreprise:null, userId: null };
+      return { ...state, isLoggedIn: false, error: action.error, isEntreprise: null, userId: null };
     }
     case "SET_LOGIN": {
-      return { ...state, isEntreprise: action.isEntreprise, userId: action.userId,  isLoggedIn: true };
+      return { ...state, isEntreprise: action.isEntreprise, userId: action.userId,  isLoggedIn: action.isLoggedIn };
     }
     default: {
       return state;
@@ -24,11 +24,14 @@ function loginReducer(state, action) {
   }
 }
 function LoginProvider({ children }) {
-  const [state, dispatch] = React.useReducer(loginReducer, {
+  const entrepriseLocal = localStorage.getItem(IS_ENTERPRISE_STORAGE_KEY);
+  const initialState = {
     isLoggedIn: tokenIsStored(),
-    isEntreprise: null,
+    isEntreprise: entrepriseLocal == 'false' ? false: true,
     userId: localStorage.getItem(USER_ID_STORAGE_KEY)
-  });
+  }
+
+  const [state, dispatch] = React.useReducer(loginReducer, initialState);
 
   const value = { state, dispatch };
   return (

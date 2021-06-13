@@ -1,13 +1,26 @@
 import React from "react";
 import "./Offer.css";
 import { getDateFormattedFromIsoDateOffer } from "../utils/helper";
+import { useIsLoggedInContext } from "../services/login-context";
+import { Backend } from "../services/backend";
+import { useHistory } from "react-router-dom";
 export const Offer = (props) => {
+  const { state } = useIsLoggedInContext();
+  const { userId } = state;
   const { offer, enterprise } = props;
+  const history = useHistory()
 
+  const createConversation = () => {
+    Backend.createConversation(userId, enterprise.id_user).then(data => {
+      history.push('/chat')
+    });
+  }
   return (
     <>
       <div className="uk-card uk-card-default uk-animation-fade">
+        
         <div className="uk-card-body">
+          <button class="uk-card-badge uk-button" onClick={() => {createConversation()}}>Contact</button>
           <div className="uk-grid">
             <div className="uk-width-1-3">
               <img src={enterprise.image_url} />

@@ -26,7 +26,7 @@ export const CvList = () => {
 
         <div className="uk-grid">
           <div className="uk-width-1-4">
-            <ul class="uk-list uk-list-large uk-list-divider">
+            <ul className="uk-list uk-list-large uk-list-divider">
               {offers
                 ? offers.map((o) => {
                     return (

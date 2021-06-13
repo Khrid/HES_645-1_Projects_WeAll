@@ -1,9 +1,7 @@
 import React, { createRef } from "react";
 import { Message } from "../components/Message";
-import { Spinner } from "../components/Spinner";
 import { Backend } from "../services/backend";
 import { useIsLoggedInContext } from "../services/login-context";
-import { userIdIsStored } from "../utils/helper";
 import "./Conversation.css";
 
 export const Conversation = () => {
@@ -17,10 +15,7 @@ export const Conversation = () => {
   const scrollElement = createRef();
 
   React.useEffect(async () => {
-    if(userIdIsStored())
-      await Backend.getConversation().then((data) => {
-      setConversations(data.filter(d => d.id_user1 === userId));
-    });
+    updateConversations()
   }, []);
 
   React.useEffect(() => {
@@ -29,8 +24,8 @@ export const Conversation = () => {
 
   React.useEffect(() => {
     scrollToBottom();
-  }, [specificConversation]);  
-  
+  }, [specificConversation]);
+
   const scrollToBottom = () => {
     if (scrollElement.current)
       scrollElement.current.scrollTop = scrollElement.current.scrollHeight;
@@ -42,6 +37,16 @@ export const Conversation = () => {
         setSpecificConversation(data);
       });
     }
+  }
+  const updateConversations = () => {
+    Backend.getConversation().then((data) => {
+      setConversations(data);
+    });
+  }
+  const resetSpecificConversation = () => {
+    setSpecificConversation(null);
+    setUser1(null);
+    setUser2(null);
   }
 
   const setConversationSelected = (conv) => {
@@ -56,22 +61,31 @@ export const Conversation = () => {
     });
   };
 
+  const getConversationForUser = () => {
+    return conversations.filter(c => c.id_user1 == +userId || c.id_user2 == +userId);
+  }
 
+  const closeConversation = () => {
+    Backend.closeConversation(user1, user2).then(data => {
+      resetSpecificConversation();
+      updateConversations();
+    });
+
+  }
   return (
     <>
       <div className="uk-container uk-container-large uk-margin-top">
-        <h1>Chat</h1>
+        <h1>Chat - user {userId}</h1>
         <div className="uk-flex">
           <div className="uk-position-relative uk-display-block uk-width-auto">
             {isLoggedIn ? (
-              <ul class="uk-list uk-list-large uk-list-divider">
-                {conversations ? conversations.map((c, i) => 
+              <ul className="uk-list uk-list-large uk-list-divider">
+                {conversations ? getConversationForUser().map((c, i) => 
                 <div key={`chatavalaible-${i}`}>
                 
                 <a onClick={(e) => setConversationSelected(c)}>
-                  
-                  {isEntreprise && c.nom_postulant ? c.nom_postulant: ''}
-                  {!isEntreprise && c.nom_entreprise ? c.nom_entreprise: ''}
+                  {isEntreprise == true ? c.nom_postulant: ''}
+                  {isEntreprise == false ? c.nom_entreprise: ''}
                 </a>
               </div>
                 ):null}
@@ -82,23 +96,33 @@ export const Conversation = () => {
           </div>
           <div className="uk-padding uk-padding-remove-top uk-width-expand">
             <div className="uk-card uk-card-default uk-border-rounded">
+              {isLoggedIn && specificConversation ? 
+                <div class="uk-card-header">
+                    <span class="uk-card-title">User {user1} to user {user2}</span>
+                    <button className="uk-button uk-button-danger" style={{float:'right'}} onClick={() => {closeConversation()}}>Close</button>
+                </div>:
+              null}
               {isLoggedIn ? (
                 <div
                   className="uk-card-body uk-padding-small uk-animation-fade chat-container"
                   ref={scrollElement}
                 >
-                  {specificConversation ? (
-                    specificConversation.map((m, index) => {
+                  
+                  {specificConversation ? (specificConversation.map((m, index) => {
                       return (
-                        <Message
-                          key={`message-${index}`}
-                          message={m}
-                          selectedUserId={userId}
-                        />
+                          <Message
+                            key={`message-${index}`}
+                            message={m}
+                            selectedUserId={userId}
+                          />                        
                       );
                     })
-                  ) : (
-                    <Spinner />
+                  ): (
+                    <div className="">
+                      <div className="uk-position-center">
+                        <h1>SELECT A CONVERSATION</h1>
+                      </div>
+                    </div>
                   )}
                 </div>
               ) : null}

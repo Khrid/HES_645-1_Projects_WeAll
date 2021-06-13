@@ -1,5 +1,7 @@
 export const TOKEN_STORAGE_KEY = "token";
 export const USER_ID_STORAGE_KEY = "userId";
+export const IS_ENTERPRISE_STORAGE_KEY = "isEnterprise";
+
 
 export default async function request(
   url,
@@ -15,9 +17,13 @@ export default async function request(
     };
 
     // For POST, PATCH & PUT, add the content-type & body
-    if (["POST", "PATCH", "PUT"].includes(options.method)) {
+    if (["POST", "PATCH", "PUT", "DELETE"].includes(options.method)) {
       queryOptions.headers["Content-Type"] = "application/json";
-      queryOptions.body = JSON.stringify(options.data);
+      if(options.data) {
+        queryOptions.body = JSON.stringify(options.data)
+      } else {
+        queryOptions.body = ""
+      }
     }
 
     // Get token from local storage

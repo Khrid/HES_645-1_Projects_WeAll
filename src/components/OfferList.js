@@ -7,16 +7,16 @@ export const OfferList = () => {
   const [offers, setOffers] = useState([]);
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [enterprise, setEnterprise] = useState();
+
   React.useEffect(() => {
     Backend.getOffers().then((o) => {
       setOffers(o);
-      console.log(o);
     });
   }, []);
+
   React.useEffect(() => {
     Backend.getEnterprise(selectedOffer?.id_entreprise).then((e) => {
       setEnterprise(e[0]);
-      console.log(enterprise);
     });
   }, [selectedOffer]);
 
@@ -27,7 +27,7 @@ export const OfferList = () => {
 
         <div className="uk-grid">
           <div className="uk-width-1-4">
-            <ul class="uk-list uk-list-large uk-list-divider">
+            <ul className="uk-list uk-list-large uk-list-divider">
               {offers
                 ? offers.map((o) => {
                     return (

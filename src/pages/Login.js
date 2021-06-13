@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Backend } from "../services/backend";
-import { TOKEN_STORAGE_KEY, USER_ID_STORAGE_KEY } from "../utils/request";
+import { TOKEN_STORAGE_KEY, USER_ID_STORAGE_KEY, IS_ENTERPRISE_STORAGE_KEY } from "../utils/request";
 import { useHistory } from "react-router-dom";
 import { useIsLoggedInContext } from "../services/login-context";
 
@@ -10,9 +10,14 @@ export default function Login() {
   // const { setIsLoggedIn, isLoggedIn } = props;
   const [email, setEmail] = useState("entreprise1@fake.ch");
   const [password, setPassword] = useState("passwordTest");
-
   const history = useHistory();
 
+  React.useEffect(() => {
+    if(isLoggedIn) {
+      history.push("/chat");
+    }
+  }, [])
+  
   const login = async () => {
     try {
       let loginData = await Backend.login(email, password);
@@ -20,7 +25,8 @@ export default function Login() {
       // Save the token to localStorage & redirect to the home page
       localStorage.setItem(TOKEN_STORAGE_KEY, loginData.token);
       localStorage.setItem(USER_ID_STORAGE_KEY, loginData.userId);
-      dispatch({ type: "SET_LOGIN", isEntreprise: loginData.isEnterprise, userId: loginData.userId  });
+      localStorage.setItem(IS_ENTERPRISE_STORAGE_KEY, loginData.isEnterprise);
+      dispatch({ type: "SET_LOGIN", isEntreprise: loginData.isEnterprise, userId: loginData.userId, isLoggedIn: true  });
 
       // Redirect to the home page
       history.push("/chat");
@@ -101,7 +107,7 @@ export default function Login() {
                       </button>
                     </div>
                   </form>
-                  {error ? <span class="uk-alert-danger">{error}</span> : null}
+                  {error ? <span className="uk-alert-danger">{error}</span> : null}
                 </div>
               </div>
             </div>

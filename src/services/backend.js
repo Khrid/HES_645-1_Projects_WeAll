@@ -10,7 +10,6 @@ export const ENDPOINTS = {
 
 export const Backend = {
   login: async (email, password) => {
-    console.log(process.env.REACT_APP_BACKEND_URL);
     return request(ENDPOINTS.LOGIN, {
       method: "POST",
       data: { email, password },
@@ -36,6 +35,13 @@ export const Backend = {
 
   sendMessage: (idUser1, idUser2, message) => {
     return request(ENDPOINTS.CHAT + "/message/" + idUser1 + "/" + idUser2 , { method:'POST', data: { message: message }});
-  }
+  },
 
+  createConversation: (idUser1, idUser2) => {
+    return request(ENDPOINTS.CHAT + "/conversation/" + idUser1 + "/" + idUser2 , { method:'POST' });
+  },
+
+  closeConversation: (idUser1, idUser2) => {
+    return request(ENDPOINTS.CHAT + "/conversation/" + idUser1 + "/" + idUser2 , { method:'DELETE'});
+  }
 };
