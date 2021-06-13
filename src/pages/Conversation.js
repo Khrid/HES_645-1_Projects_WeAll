@@ -55,10 +55,13 @@ export const Conversation = () => {
   };
 
   const sendMessage = () => {
-    Backend.sendMessage(user1, user2, messageToSend).then((data) => {
-      setMessageToSend("");
-      updateSpecificConversation();
-    });
+    if(messageToSend) {
+      Backend.sendMessage(user1, user2, messageToSend).then((data) => {
+        setMessageToSend("");
+        updateSpecificConversation();
+      });
+    }
+    
   };
 
   const getConversationForUser = () => {
@@ -97,8 +100,8 @@ export const Conversation = () => {
           <div className="uk-padding uk-padding-remove-top uk-width-expand">
             <div className="uk-card uk-card-default uk-border-rounded">
               {isLoggedIn && specificConversation ? 
-                <div class="uk-card-header">
-                    <span class="uk-card-title">User {user1} to user {user2}</span>
+                <div className="uk-card-header">
+                    <span className="uk-card-title">User {user1} to user {user2}</span>
                     <button className="uk-button uk-button-danger" style={{float:'right'}} onClick={() => {closeConversation()}}>Close</button>
                 </div>:
               null}
@@ -110,11 +113,11 @@ export const Conversation = () => {
                   
                   {specificConversation ? (specificConversation.map((m, index) => {
                       return (
-                          <Message
+                          m.message ? <Message
                             key={`message-${index}`}
                             message={m}
                             selectedUserId={userId}
-                          />                        
+                          />:null                   
                       );
                     })
                   ): (
@@ -160,6 +163,7 @@ export const Conversation = () => {
                           <button
                             className="uk-button uk-button-primary"
                             onClick={sendMessage}
+                            disabled={messageToSend ? false:true}
                           >
                             Send
                           </button>

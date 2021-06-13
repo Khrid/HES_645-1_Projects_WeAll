@@ -20,7 +20,7 @@ export const Offer = (props) => {
       <div className="uk-card uk-card-default uk-animation-fade">
         
         <div className="uk-card-body">
-          <button class="uk-card-badge uk-button" onClick={() => {createConversation()}}>Contact</button>
+          <button className="uk-card-badge uk-button" onClick={() => {createConversation()}}>Contact</button>
           <div className="uk-grid">
             <div className="uk-width-1-3">
               <img src={enterprise.image_url} />
