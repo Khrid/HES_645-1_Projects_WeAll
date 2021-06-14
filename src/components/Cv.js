@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import "./Offer.css";
 import { Backend } from "../services/backend";
 import { getDateFormattedFromIsoDateOffer } from "../utils/helper";
-export const Cv = (props) => {
-  const { cv} = props;
+import { useIsLoggedInContext } from "../services/login-context";
+import { useHistory } from "react-router-dom";
 
+export const Cv = (props) => {
+  const { cv } = props;
+  const { state } = useIsLoggedInContext();
+  const { userId } = state;
+  const history = useHistory();
   const [experience, setExperience] = useState();
   const [formation, setFormation] = useState();
   const [langue, setLangue] = useState([]);
@@ -56,13 +61,18 @@ export const Cv = (props) => {
       }
 
     };
-
+    const createConversation = () => {
+      Backend.createConversation(userId, cv.id_user).then(data => {
+        history.push('/chat')
+      });
+    }
 
 
   return (
     <>
       <div className="uk-card uk-card-default uk-animation-fade">
         <div className="uk-card-body">
+          <button className="uk-card-badge uk-button" onClick={() => {createConversation()}}>Contact</button>
           <div className="uk-grid">
             <div className="uk-width-1-3">
             <img src={cv.url_photo} />

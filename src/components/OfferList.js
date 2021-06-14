@@ -36,7 +36,7 @@ export const OfferList = () => {
                           href="#"
                           onClick={() => {
                             setSelectedOffer(o);
-                            console.log(o);
+                            // console.log(o);
                           }}
                         >
                           {o.id_offre} - {o.nom}
