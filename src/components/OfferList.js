@@ -7,7 +7,7 @@ export const OfferList = () => {
   const [offers, setOffers] = useState([]);
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [enterprise, setEnterprise] = useState();
-
+  
   React.useEffect(() => {
     Backend.getOffers().then((o) => {
       setOffers(o);
@@ -29,13 +29,14 @@ export const OfferList = () => {
           <div className="uk-width-1-4">
             <ul className="uk-list uk-list-large uk-list-divider">
               {offers
-                ? offers.map((o) => {
+                ? offers.map((o, i) => {
                     return (
-                      <li>
+                      <li key={'offers-list-' + i}>
                         <a
                           href="#"
                           onClick={() => {
                             setSelectedOffer(o);
+                            console.log(o);
                           }}
                         >
                           {o.id_offre} - {o.nom}

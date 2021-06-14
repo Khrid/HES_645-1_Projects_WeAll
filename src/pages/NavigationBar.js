@@ -28,7 +28,7 @@ export const NavigationBar = () => {
             {isLoggedIn ? (
               <>
                 {routes.map((r, i) => (
-                  <li key={'route-' + i} className="">
+                  <li className="" key={'routes-nav' + i}>
                     <NavLink
                       activeClassName="link-active"
                       className="App-link"
