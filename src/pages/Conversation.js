@@ -64,7 +64,7 @@ export const Conversation = () => {
         <div className="uk-flex">
           <div className="uk-position-relative uk-display-block uk-width-auto">
             {isLoggedIn ? (
-              <ul class="uk-list uk-list-large uk-list-divider">
+              <ul className="uk-list uk-list-large uk-list-divider">
                 {conversations ? conversations.map((c, i) => 
                 <div key={`chatavalaible-${i}`}>
                 

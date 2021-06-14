@@ -101,7 +101,7 @@ export default function Login() {
                       </button>
                     </div>
                   </form>
-                  {error ? <span class="uk-alert-danger">{error}</span> : null}
+                  {error ? <span className="uk-alert-danger">{error}</span> : null}
                 </div>
               </div>
             </div>

@@ -28,8 +28,8 @@ export const NavigationBar = () => {
           <ul className="uk-navbar-nav">
             {isLoggedIn ? (
               <>
-                {routes.map((r) => (
-                  <li className="">
+                {routes.map((r, i) => (
+                  <li className="" key={'routes-nav' + i}>
                     <NavLink
                       activeClassName="link-active"
                       className="App-link"
