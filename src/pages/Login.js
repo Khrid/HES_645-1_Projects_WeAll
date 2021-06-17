@@ -22,13 +22,13 @@ export default function Login() {
     try {
       let loginData = await Backend.login(email, password);
 
-      // Save the token to localStorage & redirect to the home page
+      // Save the token to localStorage & redirect to the chat page
       localStorage.setItem(TOKEN_STORAGE_KEY, loginData.token);
       localStorage.setItem(USER_ID_STORAGE_KEY, loginData.userId);
       localStorage.setItem(IS_ENTERPRISE_STORAGE_KEY, loginData.isEnterprise);
       dispatch({ type: "SET_LOGIN", isEntreprise: loginData.isEnterprise, userId: loginData.userId, isLoggedIn: true  });
 
-      // Redirect to the home page
+      // Redirect to the chat page
       history.push("/chat");
     } catch (e) {
       dispatch({

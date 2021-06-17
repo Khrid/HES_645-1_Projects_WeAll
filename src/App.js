@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Conversation } from "./pages/Conversation";
-import Companies from "./pages/Companies";
 import Login from "./pages/Login";
 import { NavigationBar } from "./pages/NavigationBar";
 import { LoginProvider, useIsLoggedInContext } from "./services/login-context";
@@ -20,9 +19,6 @@ function App() {
             </Route>
             <Route path="/offers" exact>
               <Offers />
-            </Route>
-            <Route path="/companies">
-              <Companies />
             </Route>
             <Route path="/chat">
               <Conversation />

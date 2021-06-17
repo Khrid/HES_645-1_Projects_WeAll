@@ -65,11 +65,11 @@ export const Conversation = () => {
   };
 
   const getConversationForUser = () => {
-    return conversations.filter(c => c.id_user1 == +userId || c.id_user2 == +userId);
+    return conversations.filter(c => (c.id_user1 == +userId || c.id_user2 == +userId) && c.nom_postulant !== ' ' && c.nom_entreprise !== ' ');
   }
 
   const closeConversation = () => {
-    Backend.closeConversation(user1, user2).then(data => {
+    Backend.closeConversation(user1, user2).then(() => {
       resetSpecificConversation();
       updateConversations();
     });
@@ -83,7 +83,7 @@ export const Conversation = () => {
           <div className="uk-position-relative uk-display-block uk-width-auto">
             {isLoggedIn ? (
               <ul className="uk-list uk-list-large uk-list-divider">
-                {conversations ? getConversationForUser().map((c, i) => 
+                {conversations ? getConversationForUser().map((c, i) =>
                 <div key={`chatavalaible-${i}`}>
                 
                 <a onClick={(e) => setConversationSelected(c)}>
@@ -153,12 +153,6 @@ export const Conversation = () => {
                     </div>
                     <div className="uk-width-auto">
                       <ul className="uk-iconnav uk-margin-small-right ">
-                        {/* <li>
-                          <a href="#" uk-icon="icon: image"></a>
-                        </li>
-                        <li>
-                          <a href="#" uk-icon="icon: location"></a>
-                        </li> */}
                         <li>
                           <button
                             className="uk-button uk-button-primary"

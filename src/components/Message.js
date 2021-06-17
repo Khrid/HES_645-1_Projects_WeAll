@@ -24,22 +24,10 @@ export const Message = (props) => {
             {getDateFormattedFromIsoDate(message.date)}
           </p>
           
-          {/* <div className="uk-card-body uk-margin-remove uk-padding-remove">
-            {message.msg}
-          </div>
-          <div className="uk-card-footer uk-margin-remove uk-padding-remove">
-            {message.date}
-          </div> */}
         </div>
       </div>
       <div className="uk-width-auto">
         <span className="uk-icon-button" uk-icon="icon: user; ratio: 1"></span>
-        {/* <img
-          className="uk-border-circle"
-          width="32"
-          height="32"
-          src="https://getuikit.com/docs/images/avatar.jpg"
-        /> */}
       </div>
     </div>
   );

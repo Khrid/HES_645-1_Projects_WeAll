@@ -16,38 +16,30 @@ export const Cv = (props) => {
   const [sejour, setSejour] = useState([]);
   const [softSkill, setSoftSkill] = useState([]);
 
-  //const [competence, setCompetence] = useState([]);
-  //const [candidat, setCandidat] = useState();
-
 
   React.useEffect(() => {
     
     Backend.getFormation(cv.id_postulant).then((e) => {
         setFormation(e);
-        //console.log(e)
     });
     
 
     Backend.getLangues(cv?.id_postulant).then((e) => {
         setLangue(e);
-        //console.log(e)
     });
 
     
     Backend.getSejours(cv?.id_postulant).then((e) => {
         setSejour(e);
-        //console.log(e)
     });
 
     
     Backend.getSoftSkill(cv.id_postulant).then((e) => {
         setSoftSkill(e);
-        //console.log(e)
     });
 
     Backend.getExperience(cv.id_postulant).then((e) => {
         setExperience(e);
-        //console.log(e)
     });
     
     }, [cv]);

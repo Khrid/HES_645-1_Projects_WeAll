@@ -8,14 +8,12 @@ export const CvList = () => {
 
   const [postulants, setPostulants] = useState([]);
   const [selectedPostulant, setSelectedPostulant] = useState(null);
-  const [selectedCv, setSelectedCv] = useState(null);
 
   
   // Get postulants
   React.useEffect(() => {
     Backend.getPostulants().then((p) => {
       setPostulants(p)
-      // console.log(p);
     });
   }, []);
 
@@ -38,7 +36,6 @@ export const CvList = () => {
                           href="#"
                           onClick={() => {
                             setSelectedPostulant(p)
-                            // console.log(selectedPostulant);
                           }}
                         >
                           {p.nom} {p.prenom}

@@ -38,7 +38,9 @@ function LoginProvider({ children }) {
     <LoginContext.Provider value={value}>{children}</LoginContext.Provider>
   );
 }
+
 function useIsLoggedInContext() {
   return React.useContext(LoginContext);
 }
+
 export { LoginProvider, useIsLoggedInContext };

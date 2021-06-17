@@ -36,12 +36,8 @@ Composant permettant d'afficher un spinner de chargement.
 
 ### pages
 Ce dossier contient les éléments qui seront inclus et affichés à l'écran.
-#### [```Companies.js```](src/pages/Companies.js)
-Permet d'afficher la liste des entreprises.
 #### [```Conversation.js```](src/pages/Conversation.js) (+ [```Conversation.css```](src/pages/Conversation.css))
 Permet d'afficher la ou les conversation(s).
-#### [```Home.js```](src/pages/Home.js)
-Page d'accueil du site.
 #### [```Login.js```](src/pages/Login.js)
 Permet à un postulant ou une entreprise de se connecter.
 #### [```NavigationBar.js```](src/pages/NavigationBar.js)
