@@ -48,3 +48,26 @@ Permet à un postulant ou une entreprise de se connecter.
 Gère la barre de navigation du site
 #### [```Offers.js```](src/pages/Offers.js)
 Permet d'afficher les offres.
+
+
+## services
+Ce dossier contient les éléments qui seront inclus et affichés à l'écran.
+#### [```backend.js```](src/services/backend.js)
+Ce fichier gère l'interaction avec le backend WeAll. Les différents endpoints sont gérés avec la constante ```ENDPOINTS```, et qui seront appelés via la constante ```Backend```. Il est ainsi possible de faire ```Backend.getExperience``` pour faire appel à l'API et récupérer l'expérience d'un postulant.
+
+#### [```login-context.js```](src/services/login-context.js)
+Ce fichier gère le ```Context``` du login.
+
+
+## utils
+Ce dossier contient les éléments qui seront inclus et affichés à l'écran.
+#### [```helper.js```](src/utils/helper.js)
+Met à dispotion diverses fonctions utilitaires.
+- ```tokenIsStored``` : renvoie l'état de stockage du token
+- ```userIdIsStored``` : renvoie l'état de stockage du user id
+- ```resetLogin``` : déconnecte l'utilisateur en vidant le token et le user ID du localStorage
+- ```getDateFormattedFromIsoDate``` : transforme une date ISO en date formatée
+- ```getDateFormattedFromIsoDateOffer``` : transforme une date d'offre en date formatée
+
+#### [```request.js```](src/utils/request.js)
+Met à disposition la fonction ```request``` qui permet de faire des appels REST. Elle est à utiliser de paire avec les endpoints exposés au travers du Backend.
