@@ -8,6 +8,8 @@ import { LoginProvider, useIsLoggedInContext } from "./services/login-context";
 import { Offers } from "./pages/Offers";
 
 function App() {
+
+  document.title = "WeAll Chat";
   return (
     <div className="App">
       <LoginProvider>
